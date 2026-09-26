@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "slam3d"
+version = "0.1.0"
+description = "Offline 360-degree construction-site SLAM, object mapping, floor-plan alignment and particle-filter localization"
+requires-python = ">=3.11"
+dependencies = [
+  "numpy", "scipy", "opencv-python-headless", "pillow", "pyyaml", "tqdm",
+  "msgpack", "psutil", "nvidia-ml-py", "matplotlib", "scikit-image", "shapely",
+  "ezdxf", "pymupdf", "plyfile", "fastapi", "uvicorn", "rosbags",
+]
+
+[project.optional-dependencies]
+gpu = ["torch", "torchvision", "ultralytics", "einops", "huggingface_hub", "safetensors", "omegaconf"]
+dev = ["pytest"]
+
+[project.scripts]
+slam3d = "slam3d.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -1,0 +1,50 @@
+:root { --bg:#14171c; --panel:#1d2128ee; --fg:#e6e8eb; --muted:#9aa3ad; --acc:#4da3ff; --warn:#ffb020; --bad:#ff5a5a; --ok:#3ecf8e; }
+* { box-sizing: border-box; }
+html, body { margin:0; height:100%; background:var(--bg); color:var(--fg); font: 13px/1.35 system-ui, sans-serif; overflow:hidden; }
+header { height:34px; display:flex; align-items:center; gap:12px; padding:0 10px; background:#0e1014; border-bottom:1px solid #2a2f37; }
+.brand { font-weight:700; color:var(--acc); }
+#stage-chips { display:flex; gap:4px; flex-wrap:wrap; }
+.chip { padding:1px 6px; border-radius:9px; font-size:11px; background:#2a2f37; color:var(--muted); cursor:default; }
+.chip.done { background:#173d2c; color:var(--ok); } .chip.running { background:#3d3417; color:var(--warn); } .chip.failed { background:#4a1c1c; color:var(--bad); }
+#perf { margin-left:auto; color:var(--muted); font-variant-numeric: tabular-nums; }
+main { position:absolute; top:34px; bottom:0; left:0; right:0; display:grid; grid-template-columns: 1.35fr 1fr; gap:4px; padding:4px; }
+.pane { position:relative; background:#0b0d10; border:1px solid #262b33; border-radius:4px; overflow:hidden; }
+#pano-pane { display:flex; flex-direction:column; }
+#pano { flex:1; cursor:grab; }
+#pano canvas, #cloud canvas { display:block; }
+#pano-hud { position:absolute; top:6px; left:8px; pointer-events:none; text-shadow:0 1px 2px #000; }
+#hud-time { font-size:15px; font-weight:600; } #hud-pose { color:#cfd6de; }
+.hint { color:var(--muted); font-size:11px; }
+#pano-hud .hint { margin-top:2px; }
+#controls { display:flex; align-items:center; gap:6px; padding:6px; background:#101318; }
+#controls button { background:#262b33; color:var(--fg); border:0; border-radius:3px; padding:4px 9px; cursor:pointer; }
+#seek { flex:1; }
+#time-label { font-variant-numeric: tabular-nums; min-width:110px; text-align:right; }
+#right { display:grid; grid-template-rows: 1.2fr 1fr; gap:4px; min-height:0; }
+#plan-pane canvas { position:absolute; inset:0; width:100%; height:100%; }
+#plan-dyn { cursor:crosshair; }
+#plan-hint { position:absolute; bottom:4px; left:8px; pointer-events:none; }
+.panel { background:var(--panel); border:1px solid #2e343d; border-radius:4px; padding:6px 8px; }
+#layers { position:absolute; top:6px; right:6px; width:210px; max-height:calc(100% - 12px); overflow:auto; display:flex; flex-direction:column; gap:2px; }
+#layers label { display:flex; gap:5px; align-items:center; }
+#layers button { margin-top:3px; background:#2b3440; color:var(--fg); border:0; border-radius:3px; padding:3px 6px; cursor:pointer; }
+#layers button.active { background:var(--acc); color:#001; }
+#layers button:disabled { opacity:.4; cursor:default; }
+#layers hr { border:0; border-top:1px solid #333a44; width:100%; }
+.small { font-size:11px; color:var(--muted); }
+#align-diag { font-size:11px; color:var(--muted); white-space:pre-wrap; }
+#pairs div { display:flex; justify-content:space-between; font-size:11px; }
+#pairs span.del { color:var(--bad); cursor:pointer; }
+#cloud { position:absolute; inset:0; }
+#cloud-pane .hint { position:absolute; bottom:4px; left:8px; pointer-events:none; }
+#inspector { position:absolute; top:10px; left:10px; width:330px; max-height:calc(100% - 20px); overflow:auto; z-index:5; }
+#inspector-close { float:right; background:none; border:0; color:var(--fg); font-size:18px; cursor:pointer; }
+#inspector img { max-width:100%; border-radius:3px; margin:4px 0; }
+#inspector table { width:100%; border-collapse:collapse; font-size:12px; }
+#inspector td { padding:1px 3px; border-bottom:1px solid #2b3038; }
+#inspector tr.obs { cursor:pointer; } #inspector tr.obs:hover { background:#2a3340; }
+.hidden { display:none !important; }
+#visits { position:fixed; z-index:10; min-width:160px; }
+#visits div.v { cursor:pointer; padding:2px 4px; } #visits div.v:hover { background:#2a3340; }
+.tag { padding:0 5px; border-radius:6px; font-size:11px; }
+.tag.confirmed { background:#173d2c; color:var(--ok);} .tag.tentative { background:#3d3417; color:var(--warn);} .tag.dynamic { background:#40203a; color:#ff8adf; }

@@ -1,0 +1,32 @@
+# Local Python environments and generated package files
+.venv/
+.venv-vggt/
+.pytest_cache/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.coverage
+htmlcov/
+
+# Generated C++ build files
+cpp/stella_driver/build/
+
+# Downloaded datasets, model weights, upstream checkouts, and run artifacts
+data/
+outputs/
+third_party/*
+!third_party/VERSIONS.json
+viewer/static/vendor/
+
+# Local editor and agent state
+.agents/
+.codex/
+.idea/
+.vscode/
+.DS_Store
+
+# Local secrets and machine-specific overrides
+.env
+.env.*
+*.local.yaml
+*.local.yml

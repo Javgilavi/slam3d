@@ -1,0 +1,74 @@
+# Public demonstration: Hilti-Trimble-Oxford 2026, floor 2, 2025-12-03 run 1 (static init, normal light).
+# Data: CC BY-NC-SA. Download with: slam3d download-sample --sequence floor_2_2025-12-03_run_1
+run_name: hilti_floor_2_2025-12-03_run_1
+output_root: outputs
+
+input:
+  type: hilti_bag
+  bag: data/hilti/bags/floor_2_2025-12-03_run_1
+  calib: data/hilti/refs/kalibr_imucam_chain.yaml
+  fisheye_masks: [data/hilti/refs/mask_cam0.png, data/hilti/refs/mask_cam1.png]
+
+ingest:
+  width: 1920            # equirect width used for SLAM/objects (height = width/2)
+  stitch_radius_m: 3.0   # central-camera stitching sphere radius
+  workers: 12
+
+mask:
+  enabled: true          # camera-rigid regions (rig, LiDAR dome, cables) from temporal variance
+  std_rel_thresh: 0.4
+  bottom_band_frac: 0.04
+
+floorplan:
+  type: mask             # mask | drawing | pdf | dxf
+  path: data/hilti/floorplans/floor_2_mask_nowindows.png
+  image: data/hilti/floorplans/floor_2.png   # optional background drawing (same raster)
+  src_res_m_per_px: 0.01
+  res_m: 0.05
+
+slam:
+  backend: stella
+  obs_every: 3           # log causal local observations every k-th frame
+  vocab: third_party/stella/orb_vocab.fbow
+
+geometry:
+  gravity: auto          # imu if available, else level_horizon
+  camera_height_m: 1.6   # generic prior; used only if IMU scale is unavailable
+
+align:
+  mode: auto             # auto | manual_only ; add correspondences: <json> for a manual initialisation
+  scale_range: [0.6, 1.6]
+  n_scales: 15
+
+localize:
+  init:
+    mode: known          # known | global
+    hilti_init_csv: data/hilti/groundtruth/init_gt_poses.csv
+    sequence: floor_2_2025-12-03_run_1
+    sigma_xy: 0.5
+    sigma_yaw_deg: 10
+    sigma_log_s: 0.15
+  pf:
+    n_particles: 3000
+  experiments:
+    - name: known_start
+    - name: known_start_kidnap
+      kidnap_at_s: 70
+    - name: global_init
+      init: {mode: global}
+
+objects:
+  enabled: true
+  model: yoloe-11s-seg.pt
+  prompts: [person, ladder, bucket, cable reel, pallet, cardboard box, fire extinguisher, trolley, toolbox, electrical panel, door, window]
+  dynamic_classes: [person]
+  keyframe_step: 1
+
+dense:
+  enabled: true
+  keyframe_step: 1
+  pixel_stride: 3
+  voxel_m: 0.03
+
+evaluation:
+  gt_tum: data/hilti/groundtruth/floor_2_2025-12-03_run_1.txt   # T_plan_cam0; used ONLY for evaluation

@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>slam3d viewer</title>
+<link rel="stylesheet" href="/static/style.css">
+<script type="importmap">
+{ "imports": { "three": "/static/vendor/three.module.js", "three/addons/": "/static/vendor/" } }
+</script>
+</head>
+<body>
+<header>
+  <span class="brand">slam3d</span>
+  <a href="/world" style="color:#78e2c7">Gaussian world ↗</a>
+  <span id="run-name"></span>
+  <span id="stage-chips"></span>
+  <span id="perf" title="panorama render fps | plan redraw ms | video-frame to pose sync"></span>
+</header>
+
+<main>
+  <section id="pano-pane" class="pane">
+    <div id="pano"></div>
+    <div id="pano-hud">
+      <div id="hud-time"></div>
+      <div id="hud-pose"></div>
+      <div class="hint">drag to look around · wheel to zoom · recorded frames only (no novel views)</div>
+    </div>
+    <div id="controls">
+      <button id="btn-play" title="play / pause (space)">▶</button>
+      <button id="btn-prev" title="previous frame (←)">⏮</button>
+      <button id="btn-next" title="next frame (→)">⏭</button>
+      <input id="seek" type="range" min="0" max="1" step="0.001" value="0">
+      <span id="time-label">0:00.0</span>
+      <select id="speed" title="playback speed">
+        <option value="0.25">0.25×</option><option value="0.5">0.5×</option><option value="1" selected>1×</option>
+        <option value="2">2×</option><option value="4">4×</option>
+      </select>
+    </div>
+  </section>
+
+  <section id="right">
+    <div id="plan-pane" class="pane">
+      <canvas id="plan-static"></canvas>
+      <canvas id="plan-dyn"></canvas>
+      <div id="layers" class="panel">
+        <b>Layers</b>
+        <label><input type="checkbox" data-layer="drawing" checked> drawing</label>
+        <label><input type="checkbox" data-layer="structure" checked> planned structure</label>
+        <label><input type="checkbox" data-layer="path" checked> camera path</label>
+        <label><input type="checkbox" data-layer="walls"> observed walls (diagnostic)</label>
+        <label title="green: planned & observed · orange: planned, in view, not observed · grey: not covered · magenta: observed, not in plan"><input type="checkbox" data-layer="asbuilt"> as-built vs plan</label>
+        <label><input type="checkbox" data-layer="gt"> ground truth path</label>
+        <label><input type="checkbox" data-layer="objects" checked> objects</label>
+        <label><input type="checkbox" data-layer="dynamic"> dynamic objects</label>
+        <label><input type="checkbox" data-layer="pf"> particle filter</label>
+        <select id="pf-exp"></select>
+        <div id="align-diag"></div>
+        <hr>
+        <b>Alignment tool</b>
+        <div class="small">Pause on a frame, press <i>pick</i>, click the true camera location on the plan.</div>
+        <button id="btn-pick">pick location for current frame</button>
+        <div id="pairs"></div>
+        <button id="btn-realign" disabled>save &amp; re-align</button>
+      </div>
+      <div id="plan-hint" class="hint">click path → jump to video · click object → inspect · drag pan · wheel zoom</div>
+    </div>
+    <div id="cloud-pane" class="pane">
+      <div id="cloud"></div>
+      <div class="hint">sparse SLAM reconstruction (plan frame, metres) · orbit: drag · click a box to inspect</div>
+    </div>
+  </section>
+
+  <aside id="inspector" class="panel hidden">
+    <button id="inspector-close">×</button>
+    <div id="inspector-body"></div>
+  </aside>
+</main>
+<div id="visits" class="panel hidden"></div>
+<video id="video" muted playsinline preload="auto" crossorigin="anonymous" style="display:none"></video>
+<script type="module" src="/static/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+{
+  "stella_vslam": {
+    "repo": "https://github.com/stella-cv/stella_vslam",
+    "commit": "e445b5452535e781fdf6777ec33a06f5f8f5e416",
+    "license": "BSD-2-Clause (see upstream LICENSE files)",
+    "docker_image": "slam3d-stella:e445b54",
+    "docker_image_id": "sha256:9544f28025b2fdc2ab5c96919908eb79fb715323f746eecc0044315377b87aa3"
+  },
+  "g2o": {
+    "repo": "https://github.com/RainerKuemmerle/g2o",
+    "tag": "20230223_git"
+  },
+  "orb_vocab": {
+    "source": "Hilti-Research/hilti-trimble-slam-challenge-2026 config/hilti_stella_vslam/orb_vocab.fbow",
+    "bytes": 44985800
+  },
+  "PanoVGGT": {
+    "repo": "https://github.com/YijingGuo-June/PanoVGGT",
+    "commit": "556bb7d2ec2d02bd3ee4ed535542e74290ba22cf",
+    "license": "MIT (code)",
+    "weights": "https://huggingface.co/YijingGuo/PanoVGGT/resolve/main/model.pt",
+    "weights_bytes": 3939890032,
+    "weights_sha256_first64MiB": "411a7d71044bf36039e4efd6d6b45d32eb6030c4aaa3951ea356c3e43c1c4f1b",
+    "dinov2_hub_cache": "~/.cache/torch/hub/facebookresearch_dinov2_main"
+  },
+  "YOLOE": {
+    "package": "ultralytics",
+    "version": "8.4.153",
+    "weights": "yoloe-11s-seg.pt",
+    "weights_bytes": 27803986,
+    "text_encoder": "mobileclip_blt.ts",
+    "license": "AGPL-3.0 (Ultralytics)"
+  },
+  "three.js": {
+    "version": "0.170.0",
+    "files": [
+      "viewer/static/vendor/three.module.js",
+      "viewer/static/vendor/OrbitControls.js"
+    ],
+    "license": "MIT"
+  },
+  "dataset": {
+    "name": "Hilti-Trimble-Oxford 2026",
+    "paper": "https://arxiv.org/abs/2607.06464",
+    "data": "https://huggingface.co/datasets/Hilti-Research/hilti-trimble-slam-challenge-2026",
+    "license": "CC BY-NC-SA (non-commercial)",
+    "sequences": [
+      "floor_2_2025-12-03_run_1 (development)",
+      "floor_2_2025-10-28_run_2 (held-out)"
+    ]
+  },
+  "python": {
+    "torch": "2.9.1+cu128",
+    "lockfile": "requirements.lock.txt"
+  },
+  "vggt_slam": {
+    "repo": "https://github.com/MIT-SPARK/VGGT-SLAM",
+    "commit": "35327ac28b7d193df9ccc39ba6346052bb6f1207"
+  },
+  "vggt_spark": {
+    "repo": "https://github.com/MIT-SPARK/VGGT_SPARK",
+    "commit": "6e6e16107b88e8e76c751826af10d4295d87ecd2"
+  },
+  "salad": {
+    "repo": "https://github.com/Dominic101/salad",
+    "commit": "33ca9c0ca1e10cbb21efc0d6a5fcb6d45688e42d"
+  },
+  "gsplat": {
+    "version": "1.5.3",
+    "CUDA_arch": "sm_120",
+    "torch": "2.9.1+cu128",
+    "environment": ".venv-vggt overlays read-only .venv site-packages",
+    "overlay_lock": "requirements.vggt-overlay.lock.txt",
+    "forward_backward_cuda_verified": true
+  }
+}

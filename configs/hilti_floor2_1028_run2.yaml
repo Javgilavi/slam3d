@@ -1,0 +1,50 @@
+# Held-out validation: same floor, different construction phase; flagged low-light + clutter + aggressive motion.
+# Parameters are identical to hilti_floor2_1203.yaml (no per-sequence tuning).
+run_name: hilti_floor_2_2025-10-28_run_2
+output_root: outputs
+
+input:
+  type: hilti_bag
+  bag: data/hilti/bags/floor_2_2025-10-28_run_2
+  calib: data/hilti/refs/kalibr_imucam_chain.yaml
+  fisheye_masks: [data/hilti/refs/mask_cam0.png, data/hilti/refs/mask_cam1.png]
+
+ingest: {width: 1920, stitch_radius_m: 3.0, workers: 12}
+mask: {enabled: true, std_rel_thresh: 0.4, bottom_band_frac: 0.04}
+
+floorplan:
+  type: mask
+  path: data/hilti/floorplans/floor_2_mask_nowindows.png
+  image: data/hilti/floorplans/floor_2.png
+  src_res_m_per_px: 0.01
+  res_m: 0.05
+
+slam: {backend: stella, obs_every: 3, vocab: third_party/stella/orb_vocab.fbow}
+geometry: {gravity: auto, camera_height_m: 1.6}
+align: {mode: auto, scale_range: [0.6, 1.6], n_scales: 15}
+
+localize:
+  init:
+    mode: known
+    hilti_init_csv: data/hilti/groundtruth/init_gt_poses.csv
+    sequence: floor_2_2025-10-28_run_2
+    sigma_xy: 0.5
+    sigma_yaw_deg: 10
+    sigma_log_s: 0.15
+  pf: {n_particles: 3000}
+  experiments:
+    - name: known_start
+    - name: global_init
+      init: {mode: global}
+
+objects:
+  enabled: true
+  model: yoloe-11s-seg.pt
+  prompts: [person, ladder, bucket, cable reel, pallet, cardboard box, fire extinguisher, trolley, toolbox, electrical panel, door, window]
+  dynamic_classes: [person]
+  keyframe_step: 1
+
+dense: {enabled: true, keyframe_step: 1, pixel_stride: 3, voxel_m: 0.03}
+
+evaluation:
+  gt_tum: data/hilti/groundtruth/floor_2_2025-10-28_run_2.txt

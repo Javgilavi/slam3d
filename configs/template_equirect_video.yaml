@@ -1,0 +1,65 @@
+# Template for YOUR recording: a stitched equirectangular (2:1) 360 video + a floor plan.
+# Copy, edit the paths marked EDIT, then:  slam3d run configs/my_site.yaml
+run_name: my_site_walkthrough            # EDIT
+output_root: outputs
+
+input:
+  type: equirect_video
+  video: /path/to/walkthrough_360.mp4   # EDIT (Insta360/GoPro/Ricoh export, 2:1)
+  # Optional IMU (CSV: t_s,gx,gy,gz,ax,ay,az) aligned to video time, and its rotation into the pano frame:
+  # imu_csv: /path/to/imu.csv
+  # R_pano_imu: [[1,0,0],[0,1,0],[0,0,1]]
+
+ingest:
+  width: 1920       # 1920 is a good speed/accuracy trade-off; 2880 for more detail
+  every_n: 1        # keep every frame (SLAM needs overlap); use 2 for slow walking at 60 fps
+  start_s: 0.0
+  # end_s: 300.0
+
+mask:
+  enabled: true     # auto-detects camera-rigid regions (helmet, pole, hand); inspect ingest/static_mask.png
+  std_rel_thresh: 0.4
+  bottom_band_frac: 0.04
+
+floorplan:
+  type: mask        # mask (recommended; black = structure) | drawing | pdf | dxf
+  path: /path/to/floorplan_structure.png  # EDIT
+  # image: /path/to/floorplan_drawing.png # optional background with the SAME pixel grid
+  src_res_m_per_px: 0.01                  # EDIT: metres per pixel of the plan raster
+  res_m: 0.05
+  # For drawings/PDF: type: drawing, extraction: {min_wall_m: 0.12, dark_thresh: 90, fill_colors_bgr: [[60,170,60]]}
+  #   -> review/edit floorplan/editable_structure_mask.png, then switch to type: mask
+  # For DXF: type: dxf, layer_regex: "(?i)wall|mauer|column|stuetze"
+
+slam:
+  backend: stella
+  obs_every: 3
+  vocab: third_party/stella/orb_vocab.fbow
+
+geometry:
+  gravity: auto            # no IMU -> assumes horizon-levelled export (Insta360 FlowState / GoPro horizon levelling)
+  camera_height_m: 1.6     # EDIT: approx. lens height above floor (helmet ~1.8, handheld pole ~1.3-1.6)
+
+align:
+  mode: auto
+  scale_range: [0.6, 1.6]
+  # correspondences: configs/my_site_correspondences.json   # created by the viewer's alignment tool
+
+localize:
+  init:
+    mode: global           # or known with x, y (plan metres), yaw (rad, camera forward), t (start time)
+  pf: {n_particles: 3000, n_particles_global: 30000}
+  experiments:
+    - name: global_init
+
+objects:
+  enabled: true
+  model: yoloe-11s-seg.pt
+  prompts: [person, ladder, bucket, cable reel, pallet, cardboard box, fire extinguisher, trolley, toolbox, electrical panel, door, window]
+  dynamic_classes: [person]
+  keyframe_step: 3
+
+dense:
+  enabled: false
+
+evaluation: {}             # add gt_tum: <T_plan_cam TUM file> if surveyed ground truth exists

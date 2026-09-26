@@ -1,0 +1,29 @@
+docstring-parser==0.18.0
+gsplat==1.5.3
+gtsam-develop==4.3a2.dev202609030306
+jaxtyping==0.3.11
+lightning-utilities==0.15.3
+markdown-it-py==4.2.0
+mdurl==0.1.2
+msgspec==0.21.1
+nerfview==0.1.3
+ninja==1.13.2
+nodeenv==1.10.0
+open3d==0.19.0
+plyfile==1.1.5
+pygments==2.21.0
+pytorch-lightning==2.6.6
+pytorch-metric-learning==2.9.0
+rich==15.0.0
+-e file:///home/jgilaviles/slam3d/third_party/salad
+splines==0.3.3
+termcolor==3.3.0
+torchmetrics==1.9.0
+typeguard==4.6.0
+typing-extensions==4.16.0
+tyro==1.0.16
+-e file:///home/jgilaviles/slam3d/third_party/vggt_spark
+-e file:///home/jgilaviles/slam3d/third_party/vggt_slam
+viser==0.2.23
+wadler-lindig==0.1.7
+yourdfpy==0.0.60
