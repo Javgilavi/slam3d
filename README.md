@@ -4,9 +4,9 @@
 
 **Turn a recorded 360° construction walkthrough into an explorable map.** `slam3d` is an offline pipeline for panoramic visual SLAM, dense geometry, floor-plan registration, object mapping, and plan-based localization. A local browser viewer keeps the recording, floor plan, and 3D map in sync.
 
-![Synchronized 360° recording, floor plan, and 3D map in the slam3d viewer](docs/assets/viewer.png)
+[![Watch the 10-second slam3d showcase](docs/assets/showcase-preview.gif)](docs/assets/showcase.mp4)
 
-*Viewer capture from the [Hilti–Trimble–Oxford 2026 dataset](https://huggingface.co/datasets/Hilti-Research/hilti-trimble-slam-challenge-2026). Dataset-derived imagery is CC BY-NC-SA 3.0; see [data and image credits](#data-and-image-credits).*
+*Click to watch the [10-second film with sound](docs/assets/showcase.mp4). The opening walkthrough and viewer are real project output; the later building and dashboard shots are labelled **vision concepts**. Sample imagery is credited below.*
 
 ## At a glance
 
@@ -23,6 +23,10 @@ The core pipeline is **offline** and stage based. Completed stages resume when t
 - **Scene understanding:** panoramic depth on keyframes, open-vocabulary YOLOE detections lifted into 3D, static and dynamic object association.
 - **Localization and review:** causal particle-filter replay, synchronized video/plan/3D browser viewer, object inspector, and alignment tool.
 - **Experimental appearance:** CPU Gaussian fitting and a CUDA-trained scene workflow with a browser `/world` viewer.
+
+![Synchronized 360° recording, floor plan, and 3D map in the current slam3d viewer](docs/assets/viewer.png)
+
+*Current viewer capture from the [Hilti–Trimble–Oxford 2026 dataset](https://huggingface.co/datasets/Hilti-Research/hilti-trimble-slam-challenge-2026).*
 
 ## Quick start
 
@@ -154,6 +158,6 @@ The viewer validation requires a processed sample run and Playwright Chromium. T
 
 ## Data and image credits
 
-The screenshots in [`docs/assets/`](docs/assets) are derived from the **Hilti–Trimble–Oxford 2026** construction dataset by Samuele Centanni, Yuhao Zhang, Yifu Tao, Julien Kindle, Frank Neuhaus, Tilman Koß, Aryaman Patel, Michael Helmberger, Emilia Szymańska, Torben Gräber, and Maurice Fallon. The [dataset](https://huggingface.co/datasets/Hilti-Research/hilti-trimble-slam-challenge-2026) is licensed [CC BY-NC-SA 3.0](https://creativecommons.org/licenses/by-nc-sa/3.0/); the screenshots are transformed visualizations and retain that noncommercial share-alike restriction. See the [dataset paper](https://arxiv.org/abs/2607.06464) and [challenge repository](https://github.com/Hilti-Research/hilti-trimble-slam-challenge-2026) for the source and citation.
+The viewer and Gaussian screenshots, plus the first two shots of the showcase video, derive from the **Hilti–Trimble–Oxford 2026** construction dataset by Samuele Centanni, Yuhao Zhang, Yifu Tao, Julien Kindle, Frank Neuhaus, Tilman Koß, Aryaman Patel, Michael Helmberger, Emilia Szymańska, Torben Gräber, and Maurice Fallon. The [dataset](https://huggingface.co/datasets/Hilti-Research/hilti-trimble-slam-challenge-2026) is licensed [CC BY-NC-SA 3.0](https://creativecommons.org/licenses/by-nc-sa/3.0/). The screenshots and composed showcase video/preview retain that noncommercial share-alike restriction. The later showcase shots are generated concept art illustrating a possible finished product, not current output. See the [dataset paper](https://arxiv.org/abs/2607.06464), [challenge repository](https://github.com/Hilti-Research/hilti-trimble-slam-challenge-2026), and [asset notes](docs/assets/README.md) for sources and credits.
 
 The original slam3d code is [MIT licensed](LICENSE). That license does not replace the dataset image license above. Third-party software and weights have their own terms. The core pipeline uses stella_vslam (BSD-2-Clause), PanoVGGT code (MIT), YOLOE/Ultralytics (AGPL-3.0), and three.js (MIT). Their pinned sources and versions are listed in [`third_party/VERSIONS.json`](third_party/VERSIONS.json). Downloaded source trees and weights are not committed here.
