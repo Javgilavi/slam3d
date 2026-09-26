@@ -1,5 +1,7 @@
 # slam3d
 
+[![Tests](https://github.com/Javgilavi/slam3d/actions/workflows/tests.yml/badge.svg)](https://github.com/Javgilavi/slam3d/actions/workflows/tests.yml)
+
 **Turn a recorded 360° construction walkthrough into an explorable map.** `slam3d` is an offline pipeline for panoramic visual SLAM, dense geometry, floor-plan registration, object mapping, and plan-based localization. A local browser viewer keeps the recording, floor plan, and 3D map in sync.
 
 ![Synchronized 360° recording, floor plan, and 3D map in the slam3d viewer](docs/assets/viewer.png)
